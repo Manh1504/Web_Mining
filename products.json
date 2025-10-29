@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "Dell XPS 13",
+    "brand": "Dell",
+    "category": "Cao cấp",
+    "price": 25000000,
+    "description": "Laptop cao cấp, màn hình 13 inch, CPU Intel Core i7",
+    "image": "https://via.placeholder.com/300x200?text=Dell+XPS+13",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "name": "Dell Inspiron 15",
+    "brand": "Dell",
+    "category": "Văn phòng",
+    "price": 16000000,
+    "description": "Laptop Dell giá tốt, Core i5 Gen 12, RAM 8GB",
+    "image": "https://via.placeholder.com/300x200?text=Dell+Inspiron+15",
+    "stock": 18
+  },
+  {
+    "id": 3,
+    "name": "Dell G15 Gaming",
+    "brand": "Dell",
+    "category": "Gaming",
+    "price": 28000000,
+    "description": "Laptop gaming Dell, RTX 3050, 15.6 inch 120Hz",
+    "image": "https://via.placeholder.com/300x200?text=Dell+G15",
+    "stock": 12
+  },
+  {
+    "id": 4,
+    "name": "MacBook Air M2",
+    "brand": "Apple",
+    "category": "Cao cấp",
+    "price": 28000000,
+    "description": "Laptop Apple với chip M2, 13 inch, siêu mỏng nhẹ",
+    "image": "https://via.placeholder.com/300x200?text=MacBook+Air+M2",
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "name": "MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "Cao cấp",
+    "price": 42000000,
+    "description": "MacBook Pro 14 inch, chip M3, màn hình Retina XDR",
+    "image": "https://via.placeholder.com/300x200?text=MacBook+Pro+14",
+    "stock": 8
+  },
+  {
+    "id": 6,
+    "name": "MacBook Air M1",
+    "brand": "Apple",
+    "category": "Cao cấp",
+    "price": 22000000,
+    "description": "MacBook Air M1, phiên bản giá tốt, hiệu năng ổn định",
+    "image": "https://via.placeholder.com/300x200?text=MacBook+Air+M1",
+    "stock": 20
+  },
+  {
+    "id": 7,
+    "name": "Asus ROG Strix G15",
+    "brand": "Asus",
+    "category": "Gaming",
+    "price": 35000000,
+    "description": "Laptop gaming mạnh mẽ, RTX 4060, màn hình 15.6 inch",
+    "image": "https://via.placeholder.com/300x200?text=Asus+ROG",
+    "stock": 8
+  },
+  {
+    "id": 8,
+    "name": "Asus TUF Gaming F15",
+    "brand": "Asus",
+    "category": "Gaming",
+    "price": 22000000,
+    "description": "Gaming phổ thông, RTX 3050, bền bỉ theo chuẩn quân đội",
+    "image": "https://via.placeholder.com/300x200?text=Asus+TUF",
+    "stock": 15
+  },
+  {
+    "id": 9,
+    "name": "Asus Vivobook 15",
+    "brand": "Asus",
+    "category": "Văn phòng",
+    "price": 14000000,
+    "description": "Laptop văn phòng nhỏ gọn, Core i5, thiết kế hiện đại",
+    "image": "https://via.placeholder.com/300x200?text=Asus+Vivobook",
+    "stock": 25
+  },
+  {
+    "id": 10,
+    "name": "Asus Zenbook 14",
+    "brand": "Asus",
+    "category": "Cao cấp",
+    "price": 26000000,
+    "description": "Ultrabook cao cấp, Core i7, màn hình OLED",
+    "image": "https://via.placeholder.com/300x200?text=Asus+Zenbook",
+    "stock": 10
+  },
+  {
+    "id": 11,
+    "name": "HP Pavilion 15",
+    "brand": "HP",
+    "category": "Văn phòng",
+    "price": 15000000,
+    "description": "Laptop văn phòng, Core i5, 15.6 inch, giá tốt",
+    "image": "https://via.placeholder.com/300x200?text=HP+Pavilion",
+    "stock": 20
+  },
+  {
+    "id": 12,
+    "name": "HP Envy 13",
+    "brand": "HP",
+    "category": "Cao cấp",
+    "price": 24000000,
+    "description": "Laptop cao cấp, mỏng nhẹ, Core i7, thiết kế kim loại",
+    "image": "https://via.placeholder.com/300x200?text=HP+Envy",
+    "stock": 12
+  },
+  {
+    "id": 13,
+    "name": "HP Omen 16",
+    "brand": "HP",
+    "category": "Gaming",
+    "price": 32000000,
+    "description": "Gaming cao cấp, RTX 4060, màn hình 165Hz",
+    "image": "https://via.placeholder.com/300x200?text=HP+Omen",
+    "stock": 9
+  },
+  {
+    "id": 14,
+    "name": "Lenovo ThinkPad X1",
+    "brand": "Lenovo",
+    "category": "Doanh nhân",
+    "price": 32000000,
+    "description": "Laptop doanh nhân, bền bỉ, bảo mật cao",
+    "image": "https://via.placeholder.com/300x200?text=ThinkPad+X1",
+    "stock": 12
+  },
+  {
+    "id": 15,
+    "name": "Lenovo IdeaPad 3",
+    "brand": "Lenovo",
+    "category": "Văn phòng",
+    "price": 12000000,
+    "description": "Laptop giá rẻ, phù hợp sinh viên, Core i3",
+    "image": "https://via.placeholder.com/300x200?text=Lenovo+IdeaPad",
+    "stock": 30
+  },
+  {
+    "id": 16,
+    "name": "Lenovo Legion 5",
+    "brand": "Lenovo",
+    "category": "Gaming",
+    "price": 30000000,
+    "description": "Gaming tầm trung, RTX 4050, tản nhiệt tốt",
+    "image": "https://via.placeholder.com/300x200?text=Lenovo+Legion",
+    "stock": 10
+  },
+  {
+    "id": 17,
+    "name": "Lenovo ThinkBook 14",
+    "brand": "Lenovo",
+    "category": "Doanh nhân",
+    "price": 18000000,
+    "description": "Laptop doanh nhân phổ thông, Core i5, thiết kế chuyên nghiệp",
+    "image": "https://via.placeholder.com/300x200?text=ThinkBook+14",
+    "stock": 16
+  },
+  {
+    "id": 18,
+    "name": "MSI Katana 15",
+    "brand": "MSI",
+    "category": "Gaming",
+    "price": 26000000,
+    "description": "Gaming phổ thông MSI, RTX 4050, giá tốt",
+    "image": "https://via.placeholder.com/300x200?text=MSI+Katana",
+    "stock": 13
+  },
+  {
+    "id": 19,
+    "name": "MSI Prestige 14",
+    "brand": "MSI",
+    "category": "Cao cấp",
+    "price": 29000000,
+    "description": "Laptop sáng tạo nội dung, Core i7, card đồ họa rời",
+    "image": "https://via.placeholder.com/300x200?text=MSI+Prestige",
+    "stock": 7
+  },
+  {
+    "id": 20,
+    "name": "MSI GF63 Thin",
+    "brand": "MSI",
+    "category": "Gaming",
+    "price": 19000000,
+    "description": "Gaming entry level, GTX 1650, nhỏ gọn",
+    "image": "https://via.placeholder.com/300x200?text=MSI+GF63",
+    "stock": 14
+  }
+]

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Laptop Store{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-detail {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .product-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .product-detail-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .product-image-large {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    .product-detail-info h1 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+    }
+    
+    .product-detail-price {
+        font-size: 2rem;
+        color: #e74c3c;
+        font-weight: bold;
+        margin: 1.5rem 0;
+    }
+    
+    .product-detail-description {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+    
+    .product-detail-stock {
+        padding: 0.75rem;
+        background: #d4edda;
+        color: #155724;
+        border-radius: 5px;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+    }
+    
+    .product-detail-stock.out-of-stock {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .order-form {
+        border-top: 2px solid #f0f0f0;
+        padding-top: 2rem;
+    }
+    
+    .quantity-input {
+        width: 100px;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-right: 1rem;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #667eea;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('index') }}" class="back-link">← Quay lại trang chủ</a>
+
+<div class="product-detail">
+    <div class="product-detail-grid">
+        <div>
+            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image-large">
+        </div>
+        
+        <div class="product-detail-info">
+            <h1>{{ product.name }}</h1>
+            
+            <div class="product-detail-price">
+                {{ "{:,.0f}".format(product.price) }} đ
+            </div>
+            
+            <div class="product-detail-description">
+                {{ product.description }}
+            </div>
+            
+            <div class="product-detail-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                {% if product.stock > 0 %}
+                    ✅ Còn hàng: {{ product.stock }} sản phẩm
+                {% else %}
+                    ❌ Hết hàng
+                {% endif %}
+            </div>
+            
+            {% if session.user_id %}
+                {% if product.stock > 0 %}
+                    <form method="POST" action="{{ url_for('order', product_id=product.id) }}" class="order-form">
+                        <label for="quantity" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Số lượng:</label>
+                        <input 
+                            type="number" 
+                            id="quantity" 
+                            name="quantity" 
+                            value="1" 
+                            min="1" 
+                            max="{{ product.stock }}"
+                            class="quantity-input"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            🛒 Đặt hàng ngay
+                        </button>
+                    </form>
+                {% else %}
+                    <button class="btn btn-secondary" disabled style="cursor: not-allowed;">
+                        Sản phẩm đã hết hàng
+                    </button>
+                {% endif %}
+            {% else %}
+                <div style="padding: 1rem; background: #fff3cd; border-radius: 5px; margin-top: 1rem;">
+                    ⚠️ Vui lòng <a href="{{ url_for('login') }}" style="color: #667eea;">đăng nhập</a> để đặt hàng
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

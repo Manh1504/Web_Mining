@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Đã xem gần đây - Laptop Store{% endblock %}
+
+{% block extra_css %}
+<style>
+    .recent-views-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .recent-views-container h1 {
+        color: #333;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .product-card {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s;
+        position: relative;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        border-color: #667eea;
+    }
+    
+    .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .product-info {
+        padding: 1.5rem;
+    }
+    
+    .product-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+    
+    .product-description {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+    
+    .product-price {
+        font-size: 1.3rem;
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .viewed-time {
+        font-size: 0.85rem;
+        color: #888;
+        margin-bottom: 1rem;
+    }
+    
+    .product-stock {
+        font-size: 0.9rem;
+        color: #27ae60;
+        margin-bottom: 1rem;
+    }
+    
+    .product-stock.out-of-stock {
+        color: #e74c3c;
+    }
+    
+    .no-views {
+        text-align: center;
+        padding: 3rem;
+        color: #666;
+    }
+    
+    .no-views h2 {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="recent-views-container">
+    <h1>👁️ Sản phẩm đã xem gần đây</h1>
+    
+    {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">{{ product.name }}</div>
+                        <div class="product-description">{{ product.description }}</div>
+                        <div class="product-price">{{ "{:,.0f}".format(product.price) }} đ</div>
+                        <div class="viewed-time">
+                            🕐 Xem lúc: {{ product.viewed_at[11:16] }} - {{ product.viewed_at[8:10] }}/{{ product.viewed_at[5:7] }}
+                        </div>
+                        <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                            {% if product.stock > 0 %}
+                                Còn hàng: {{ product.stock }} sản phẩm
+                            {% else %}
+                                Hết hàng
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary" style="width: 100%; text-align: center;">
+                            Xem lại
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-views">
+            <h2>😔 Bạn chưa xem sản phẩm nào</h2>
+            <p>Hãy khám phá các sản phẩm laptop tuyệt vời của chúng tôi!</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                Khám phá ngay
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Đơn hàng của tôi - Laptop Store{% endblock %}
+
+{% block extra_css %}
+<style>
+    .orders-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .orders-container h1 {
+        color: #333;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .order-card {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: border-color 0.3s;
+    }
+    
+    .order-card:hover {
+        border-color: #667eea;
+    }
+    
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .order-id {
+        font-weight: bold;
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+    
+    .order-status {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        background: #fff3cd;
+        color: #856404;
+        font-weight: 500;
+    }
+    
+    .order-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .order-info-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .order-info-label {
+        color: #888;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .order-info-value {
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .order-total {
+        text-align: right;
+        font-size: 1.3rem;
+        color: #e74c3c;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+    
+    .no-orders {
+        text-align: center;
+        padding: 3rem;
+        color: #666;
+    }
+    
+    .no-orders h2 {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="orders-container">
+    <h1>📦 Đơn hàng của tôi</h1>
+    
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-id">Đơn hàng #{{ order.id }}</div>
+                    <div class="order-status">{{ order.status }}</div>
+                </div>
+                
+                <div class="order-info">
+                    <div class="order-info-item">
+                        <span class="order-info-label">Sản phẩm</span>
+                        <span class="order-info-value">{{ order.product_name }}</span>
+                    </div>
+                    
+                    <div class="order-info-item">
+                        <span class="order-info-label">Số lượng</span>
+                        <span class="order-info-value">{{ order.quantity }}</span>
+                    </div>
+                    
+                    <div class="order-info-item">
+                        <span class="order-info-label">Ngày đặt</span>
+                        <span class="order-info-value">{{ order.created_at[:10] }}</span>
+                    </div>
+                </div>
+                
+                <div class="order-total">
+                    Tổng tiền: {{ "{:,.0f}".format(order.total_price) }} đ
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-orders">
+            <h2>Bạn chưa có đơn hàng nào</h2>
+            <p>Hãy khám phá các sản phẩm tuyệt vời của chúng tôi!</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                Mua sắm ngay
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
