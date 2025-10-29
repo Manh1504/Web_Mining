@@ -63,15 +63,15 @@
 
 {% block content %}
 <div class="auth-container">
-    <h1>🔐 Đăng nhập</h1>
+    <h1>Đăng nhập</h1>
     <form method="POST" action="{{ url_for('login') }}">
         <div class="form-group">
-            <label for="username">Tên đăng nhập *</label>
+            <label for="username">Tên đăng nhập </label>
             <input type="text" id="username" name="username" required autofocus>
         </div>
         
         <div class="form-group">
-            <label for="password">Mật khẩu *</label>
+            <label for="password">Mật khẩu </label>
             <input type="password" id="password" name="password" required>
         </div>
         

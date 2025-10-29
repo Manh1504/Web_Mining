@@ -4,114 +4,98 @@
 
 {% block extra_css %}
 <style>
-    .search-section {
-        background: white;
-        padding: 2.5rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    /* Section Header */
+    .section {
         margin-bottom: 3rem;
-        border: 2px solid rgba(102, 126, 234, 0.1);
-    }
-
-    .search-section h2 {
-        margin-bottom: 1.5rem;
-        color: #2c3e50;
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-
-    .recommendation-section {
-        margin-bottom: 4rem;
-        padding: 2.5rem;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-        border-radius: 20px;
-        border: 2px solid rgba(102, 126, 234, 0.15);
     }
 
     .section-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
+        background: #fff;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #e74c3c;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
     }
 
     .section-title {
-        font-size: 2rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
     }
 
     .section-subtitle {
-        font-size: 0.95rem;
-        color: #718096;
-        font-weight: 500;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 0.25rem;
     }
 
+    .recommend-badge {
+        background: #e74c3c;
+        color: white;
+        padding: 0.3rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+
+    /* Products Grid */
     .products-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 1rem;
     }
 
     .product-card {
-        background: white;
-        border-radius: 16px;
+        background: #fff;
+        border-radius: 4px;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
-        height: 100%;
         position: relative;
     }
 
     .product-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        border-color: #667eea;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        transform: translateY(-4px);
     }
 
-    .product-card.recommended {
-        border: 2px solid #667eea;
-        background: linear-gradient(to bottom, rgba(102, 126, 234, 0.02) 0%, white 100%);
-    }
-
-    .recommend-badge {
+    .product-badge {
         position: absolute;
-        top: 15px;
-        right: 15px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        top: 10px;
+        right: 10px;
+        background: #e74c3c;
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 3px;
+        font-size: 0.75rem;
         font-weight: 700;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        z-index: 2;
+        z-index: 1;
+        text-transform: uppercase;
+    }
+
+    .product-image-wrapper {
+        width: 100%;
+        height: 200px;
+        background: #f8f9fa;
         display: flex;
         align-items: center;
-        gap: 0.3rem;
-    }
-
-    .ai-badge {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        font-size: 0.75rem;
-        padding: 0.25rem 0.6rem;
-        border-radius: 12px;
-        margin-left: 0.3rem;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
     }
 
     .product-image {
         width: 100%;
-        height: 240px;
+        height: 100%;
         object-fit: cover;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        transition: transform 0.4s ease;
+        transition: transform 0.3s ease;
     }
 
     .product-card:hover .product-image {
@@ -119,31 +103,19 @@
     }
 
     .product-info {
-        padding: 1.5rem;
+        padding: 1rem;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
     }
 
     .product-name {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
         color: #2c3e50;
+        margin-bottom: 0.5rem;
         line-height: 1.4;
-        min-height: 3rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .product-description {
-        color: #718096;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-        line-height: 1.6;
-        min-height: 3.2rem;
+        min-height: 2.8rem;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -152,170 +124,208 @@
 
     .product-meta {
         display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        padding: 0.5rem;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 8px;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
     }
 
-    .meta-item {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #667eea;
+    .meta-tag {
+        padding: 0.2rem 0.5rem;
+        background: #ecf0f1;
+        border-radius: 3px;
+        color: #7f8c8d;
+        font-weight: 500;
     }
 
     .product-price {
-        font-size: 1.75rem;
+        font-size: 1.3rem;
         color: #e74c3c;
-        font-weight: 800;
-        margin-bottom: 0.75rem;
-        letter-spacing: -0.5px;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-old-price {
+        font-size: 0.9rem;
+        color: #95a5a6;
+        text-decoration: line-through;
+        margin-bottom: 0.5rem;
     }
 
     .product-stock {
-        font-size: 0.9rem;
-        color: #10b981;
-        margin-bottom: 1.25rem;
-        font-weight: 600;
-        padding: 0.4rem 0.75rem;
-        background: rgba(16, 185, 129, 0.1);
-        border-radius: 6px;
-        display: inline-block;
+        font-size: 0.85rem;
+        color: #27ae60;
+        margin-bottom: 0.75rem;
+        font-weight: 500;
     }
 
     .product-stock.out-of-stock {
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.1);
+        color: #e74c3c;
+    }
+
+    .product-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        margin-top: auto;
+    }
+
+    .btn-view {
+        padding: 0.6rem;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background 0.3s;
+    }
+
+    .btn-view:hover {
+        background: #2980b9;
     }
 
     .no-results {
+        background: #fff;
+        padding: 3rem;
         text-align: center;
-        padding: 4rem 2rem;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .no-results h2 {
-        color: #4a5568;
+        color: #7f8c8d;
         margin-bottom: 1rem;
-        font-size: 2rem;
+    }
+
+    /* Promo Banner */
+    .promo-banner {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 4px;
+        color: white;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .promo-banner h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .promo-banner p {
+        font-size: 1.1rem;
+        opacity: 0.95;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="search-section">
-    <h2>🔍 Tìm kiếm sản phẩm</h2>
-    <form method="GET" action="{{ url_for('index') }}">
-        <input
-            type="text"
-            name="search"
-            class="search-input"
-            placeholder="Tìm laptop theo tên, hãng, hoặc mô tả..."
-            value="{{ search_query }}"
-            autofocus
-        >
-    </form>
-</div>
 
 {% if session.user_id and recommended_products and not search_query %}
-<div class="recommendation-section">
+
+<section class="section">
     <div class="section-header">
-        <div>
-            <h2 class="section-title">
-                ✨ Đề xuất dành riêng cho bạn
-                <span class="ai-badge">🤖 AI</span>
-            </h2>
-            <p class="section-subtitle">
-                Được phân tích bởi trí tuệ nhân tạo dựa trên lịch sử xem và tìm kiếm của bạn
-            </p>
+        <div style="display: flex; align-items: center;">
+            <div>
+                <h2 class="section-title">
+                    DÀNH RIÊNG CHO BẠN
+                </h2>
+                <p class="section-subtitle">Sản phẩm được đề xuất phù hợp với bạn</p>
+            </div>
         </div>
     </div>
+
     <div class="products-grid">
         {% for product in recommended_products %}
-            <div class="product-card recommended">
-                <div class="recommend-badge">
-                    ⭐ Đề xuất
-                </div>
-                <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
-                <div class="product-info">
-                    <div class="product-name">{{ product.name }}</div>
-                    <div class="product-description">{{ product.description }}</div>
-                    <div class="product-meta">
-                        <span class="meta-item">🏷️ {{ product.brand }}</span>
-                        <span style="color: #cbd5e0;">•</span>
-                        <span class="meta-item">{{ product.category }}</span>
-                    </div>
-                    <div class="product-price">{{ "{:,.0f}".format(product.price) }} đ</div>
-                    <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
-                        {% if product.stock > 0 %}
-                            ✓ Còn {{ product.stock }} sản phẩm
-                        {% else %}
-                            ✗ Hết hàng
-                        {% endif %}
-                    </div>
-                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: auto;">
-                        Xem chi tiết →
-                    </a>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-
-{% if search_query %}
-    <h2 style="margin-bottom: 2rem; color: #2c3e50; font-size: 2rem; font-weight: 700;">
-        Kết quả tìm kiếm cho: "<span style="color: #667eea;">{{ search_query }}</span>"
-    </h2>
-{% else %}
-    <h2 style="margin-bottom: 2rem; color: #2c3e50; font-size: 2rem; font-weight: 700;">
-        {% if session.user_id and recommended_products %}
-            📱 Tất cả sản phẩm
-        {% else %}
-            🌟 Sản phẩm nổi bật
-        {% endif %}
-    </h2>
-{% endif %}
-
-{% if products %}
-    <div class="products-grid">
-        {% for product in products %}
             <div class="product-card">
-                <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                <span class="product-badge">Đề xuất</span>
+                <div class="product-image-wrapper">
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                </div>
                 <div class="product-info">
-                    <div class="product-name">{{ product.name }}</div>
-                    <div class="product-description">{{ product.description }}</div>
+                    <h3 class="product-name">{{ product.name }}</h3>
                     <div class="product-meta">
-                        <span class="meta-item">🏷️ {{ product.brand }}</span>
-                        <span style="color: #cbd5e0;">•</span>
-                        <span class="meta-item">{{ product.category }}</span>
+                        <span class="meta-tag">{{ product.brand }}</span>
+                        <span class="meta-tag">{{ product.category }}</span>
                     </div>
-                    <div class="product-price">{{ "{:,.0f}".format(product.price) }} đ</div>
+                    <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
                     <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
                         {% if product.stock > 0 %}
-                            ✓ Còn {{ product.stock }} sản phẩm
+                            ✓ Còn hàng: {{ product.stock }}
                         {% else %}
                             ✗ Hết hàng
                         {% endif %}
                     </div>
-                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: auto;">
-                        Xem chi tiết →
-                    </a>
+                    <div class="product-actions">
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
+                            XEM CHI TIẾT
+                        </a>
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
-{% else %}
-    <div class="no-results">
-        <h2>😔 Không tìm thấy sản phẩm nào</h2>
-        <p>Vui lòng thử lại với từ khóa khác hoặc xem tất cả sản phẩm</p>
-        <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1.5rem;">
-            ← Xem tất cả sản phẩm
-        </a>
-    </div>
+</section>
 {% endif %}
+
+<section class="section">
+    <div class="section-header">
+        <h2 class="section-title">
+            {% if search_query %}
+                KẾT QUẢ TÌM KIẾM: "{{ search_query }}"
+            {% else %}
+                TẤT CẢ SẢN PHẨM
+            {% endif %}
+        </h2>
+        {% if not search_query %}
+            <p class="section-subtitle">Khám phá bộ sưu tập laptop đa dạng với giá tốt nhất</p>
+        {% endif %}
+    </div>
+
+    {% if products %}
+        <div class="products-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    {% if product.stock > 0 and product.stock < 5 %}
+                        <span class="product-badge" style="background: #f39c12;">Sắp hết</span>
+                    {% endif %}
+                    <div class="product-image-wrapper">
+                        <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <div class="product-meta">
+                            <span class="meta-tag">{{ product.brand }}</span>
+                            <span class="meta-tag">{{ product.category }}</span>
+                        </div>
+                        <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
+                        <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                            {% if product.stock > 0 %}
+                                ✓ Còn hàng: {{ product.stock }}
+                            {% else %}
+                                ✗ Hết hàng
+                            {% endif %}
+                        </div>
+                        <div class="product-actions">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
+                                XEM CHI TIẾT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-results">
+            <h2>Không tìm thấy sản phẩm nào</h2>
+            <p>Vui lòng thử lại với từ khóa khác hoặc xem tất cả sản phẩm</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                XEM TẤT CẢ SẢN PHẨM
+            </a>
+        </div>
+    {% endif %}
+</section>
+
 {% endblock %}

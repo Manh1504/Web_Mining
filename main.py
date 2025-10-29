@@ -386,7 +386,7 @@ def product_detail(product_id):
 
         write_json(RECENT_VIEWS_FILE, recent_views)
 
-    # Lấy sản phẩm tương tự sử dụng ML
+    # Lấy sản phẩm tương tự
     similar_products = []
     if 'user_id' in session:
         try:
@@ -483,7 +483,6 @@ def recent_views():
 @app.route('/retrain-model')
 @login_required
 def retrain_model():
-    """Route để retrain model (chỉ admin nên có quyền)"""
     try:
         recommender = ProductRecommendationML()
         recommender.train_and_save()
@@ -513,7 +512,6 @@ def api_recommendations(user_id):
 
 @app.route('/trending')
 def trending():
-    """Hiển thị sản phẩm trending"""
     try:
         recommender = ProductRecommendationML()
         recommender.load_data()
@@ -527,7 +525,6 @@ def trending():
 @app.route('/search-history')
 @login_required
 def search_history():
-    """Xem lịch sử tìm kiếm"""
     search_history = read_json(SEARCH_HISTORY_FILE)
     user_id = str(session['user_id'])
 
@@ -542,7 +539,6 @@ if __name__ == '__main__':
     # Train model lần đầu nếu chưa có
     recommender = ProductRecommendationML()
     if not recommender.load_model():
-        print("Training initial model...")
         recommender.train_and_save()
 
     app.run(debug=True)

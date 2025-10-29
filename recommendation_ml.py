@@ -17,7 +17,6 @@ class ProductRecommendationML:
         self.model_file = 'recommendation_model.pkl'
 
     def load_data(self):
-        """Load sản phẩm và dữ liệu người dùng"""
         with open('products.json', 'r', encoding='utf-8') as f:
             self.products = json.load(f)
 
@@ -227,7 +226,6 @@ class ProductRecommendationML:
 
     def train_and_save(self):
 
-        print("🔄 Đang train model...")
         self.load_data()
         self.build_product_features()
 
@@ -241,7 +239,7 @@ class ProductRecommendationML:
         with open(self.model_file, 'wb') as f:
             pickle.dump(model_data, f)
 
-        print(f"✓ Model đã được train và lưu vào '{self.model_file}'")
+        print(f" Model đã được train và lưu vào '{self.model_file}'")
 
     def load_model(self):
 
@@ -252,10 +250,10 @@ class ProductRecommendationML:
                     self.vectorizer = model_data['vectorizer']
                     self.product_vectors = model_data['product_vectors']
                     self.products = model_data['products']
-                print(f"✓ Đã load model từ '{self.model_file}'")
+                print(f"Đã load model từ '{self.model_file}'")
                 return True
             except Exception as e:
-                print(f"✗ Lỗi khi load model: {e}")
+                print(f"Lỗi khi load model: {e}")
                 return False
         return False
 
@@ -285,10 +283,6 @@ def get_ml_recommendations(user_id, n=6):
 
 
 def save_search_query(user_id, query):
-    """
-    Lưu lịch sử tìm kiếm của user
-    Gọi hàm này trong Flask route search
-    """
     try:
         with open('search_history.json', 'r', encoding='utf-8') as f:
             search_history = json.load(f)
@@ -313,28 +307,10 @@ def save_search_query(user_id, query):
 
 
 if __name__ == '__main__':
-    print("=" * 50)
-    print("ML Product Recommendation System")
-    print("=" * 50)
 
     # Train model lần đầu
     recommender = ProductRecommendationML()
     recommender.train_and_save()
 
-    print("\n📊 Test recommendations for user_id=1:")
-    print("-" * 50)
 
     recommendations = get_ml_recommendations(user_id=1, n=6)
-
-    if recommendations:
-        for i, product in enumerate(recommendations, 1):
-            print(f"{i}. {product['name']}")
-            print(f"   Brand: {product['brand']} | Category: {product['category']}")
-            print(f"   Price: {product['price']:,}đ")
-            print()
-    else:
-        print("Chưa có đủ dữ liệu để gợi ý")
-
-    print("=" * 50)
-    print("✓ Setup hoàn tất! Có thể chạy Flask app.")
-    print("=" * 50)

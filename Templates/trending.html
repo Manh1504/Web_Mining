@@ -193,7 +193,7 @@
 
 {% block content %}
 <div class="trending-header">
-    <h1>🔥 Sản phẩm Trending</h1>
+    <h1>Sản phẩm Trending</h1>
     <p>Những laptop được quan tâm và xem nhiều nhất trong 7 ngày qua</p>
 </div>
 
@@ -202,14 +202,14 @@
         {% for product in products %}
             <div class="product-card">
                 <div class="trending-badge">
-                    🔥 HOT
+                    HOT
                 </div>
                 <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
                 <div class="product-info">
                     <div class="product-name">{{ product.name }}</div>
                     <div class="product-description">{{ product.description }}</div>
                     <div class="product-meta">
-                        <span class="meta-item">🏷️ {{ product.brand }}</span>
+                        <span class="meta-item">🏷{{ product.brand }}</span>
                         <span style="color: #cbd5e0;">•</span>
                         <span class="meta-item">{{ product.category }}</span>
                     </div>
@@ -230,7 +230,7 @@
     </div>
 {% else %}
     <div class="no-products">
-        <h2>📊 Chưa có dữ liệu trending</h2>
+        <h2>Chưa có dữ liệu trending</h2>
         <p>Hãy quay lại sau khi có nhiều người xem sản phẩm hơn!</p>
         <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1.5rem;">
             ← Về trang chủ
