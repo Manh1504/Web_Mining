@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import json
 import os
 from datetime import datetime
 from functools import wraps
 
-# Import ML recommendation system
-from recommendation_ml import get_ml_recommendations, save_search_query, ProductRecommendationML
+from recommendation_ml import get_ml_recommendations, save_search_query
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here-change-in-production'
@@ -15,7 +14,6 @@ USERS_FILE = 'users.json'
 PRODUCTS_FILE = 'products.json'
 ORDERS_FILE = 'orders.json'
 RECENT_VIEWS_FILE = 'recent_views.json'
-SEARCH_HISTORY_FILE = 'search_history.json'
 
 
 # Initialize JSON files
@@ -57,6 +55,26 @@ def init_files():
                 'image': 'https://via.placeholder.com/300x200?text=Dell+G15',
                 'stock': 12
             },
+            {
+                'id': 21,
+                'name': 'Dell Vostro 15',
+                'brand': 'Dell',
+                'category': 'Doanh nhân',
+                'price': 17000000,
+                'description': 'Laptop doanh nghiệp, Core i5, bảo mật tốt',
+                'image': 'https://via.placeholder.com/300x200?text=Dell+Vostro',
+                'stock': 14
+            },
+            {
+                'id': 22,
+                'name': 'Dell Latitude 14',
+                'brand': 'Dell',
+                'category': 'Doanh nhân',
+                'price': 22000000,
+                'description': 'Laptop doanh nghiệp cao cấp, bền bỉ',
+                'image': 'https://via.placeholder.com/300x200?text=Dell+Latitude',
+                'stock': 9
+            },
             # Apple MacBook
             {
                 'id': 4,
@@ -87,6 +105,16 @@ def init_files():
                 'description': 'MacBook Air M1, phiên bản giá tốt, hiệu năng ổn định',
                 'image': 'https://via.placeholder.com/300x200?text=MacBook+Air+M1',
                 'stock': 20
+            },
+            {
+                'id': 23,
+                'name': 'MacBook Pro 16 M3 Pro',
+                'brand': 'Apple',
+                'category': 'Cao cấp',
+                'price': 65000000,
+                'description': 'MacBook Pro 16 inch, chip M3 Pro, dành cho chuyên gia',
+                'image': 'https://via.placeholder.com/300x200?text=MacBook+Pro+16',
+                'stock': 5
             },
             # Asus laptops
             {
@@ -129,6 +157,26 @@ def init_files():
                 'image': 'https://via.placeholder.com/300x200?text=Asus+Zenbook',
                 'stock': 10
             },
+            {
+                'id': 24,
+                'name': 'Asus ROG Zephyrus G14',
+                'brand': 'Asus',
+                'category': 'Gaming',
+                'price': 38000000,
+                'description': 'Gaming nhỏ gọn, Ryzen 9, RTX 4060, 14 inch',
+                'image': 'https://via.placeholder.com/300x200?text=Asus+Zephyrus',
+                'stock': 6
+            },
+            {
+                'id': 25,
+                'name': 'Asus ExpertBook B9',
+                'brand': 'Asus',
+                'category': 'Doanh nhân',
+                'price': 34000000,
+                'description': 'Laptop siêu mỏng nhẹ cho doanh nhân, 880g',
+                'image': 'https://via.placeholder.com/300x200?text=Asus+ExpertBook',
+                'stock': 7
+            },
             # HP laptops
             {
                 'id': 11,
@@ -159,6 +207,26 @@ def init_files():
                 'description': 'Gaming cao cấp, RTX 4060, màn hình 165Hz',
                 'image': 'https://via.placeholder.com/300x200?text=HP+Omen',
                 'stock': 9
+            },
+            {
+                'id': 26,
+                'name': 'HP Victus 15',
+                'brand': 'HP',
+                'category': 'Gaming',
+                'price': 20000000,
+                'description': 'Gaming giá rẻ, GTX 1650, phù hợp sinh viên',
+                'image': 'https://via.placeholder.com/300x200?text=HP+Victus',
+                'stock': 16
+            },
+            {
+                'id': 27,
+                'name': 'HP EliteBook 840',
+                'brand': 'HP',
+                'category': 'Doanh nhân',
+                'price': 29000000,
+                'description': 'Laptop doanh nghiệp, bảo mật cao, bền bỉ',
+                'image': 'https://via.placeholder.com/300x200?text=HP+EliteBook',
+                'stock': 10
             },
             # Lenovo laptops
             {
@@ -201,6 +269,26 @@ def init_files():
                 'image': 'https://via.placeholder.com/300x200?text=ThinkBook+14',
                 'stock': 16
             },
+            {
+                'id': 28,
+                'name': 'Lenovo Legion 7',
+                'brand': 'Lenovo',
+                'category': 'Gaming',
+                'price': 45000000,
+                'description': 'Gaming cao cấp, RTX 4070, màn hình 240Hz',
+                'image': 'https://via.placeholder.com/300x200?text=Lenovo+Legion+7',
+                'stock': 5
+            },
+            {
+                'id': 29,
+                'name': 'Lenovo Yoga Slim 7',
+                'brand': 'Lenovo',
+                'category': 'Cao cấp',
+                'price': 23000000,
+                'description': 'Ultrabook mỏng nhẹ, Ryzen 7, màn hình 2.8K',
+                'image': 'https://via.placeholder.com/300x200?text=Lenovo+Yoga',
+                'stock': 13
+            },
             # MSI Gaming
             {
                 'id': 18,
@@ -231,6 +319,16 @@ def init_files():
                 'description': 'Gaming entry level, GTX 1650, nhỏ gọn',
                 'image': 'https://via.placeholder.com/300x200?text=MSI+GF63',
                 'stock': 14
+            },
+            {
+                'id': 30,
+                'name': 'MSI Raider GE78',
+                'brand': 'MSI',
+                'category': 'Gaming',
+                'price': 75000000,
+                'description': 'Gaming flagship, RTX 4090, màn hình Mini LED',
+                'image': 'https://via.placeholder.com/300x200?text=MSI+Raider',
+                'stock': 3
             }
         ]
         with open(PRODUCTS_FILE, 'w', encoding='utf-8') as f:
@@ -242,10 +340,6 @@ def init_files():
 
     if not os.path.exists(RECENT_VIEWS_FILE):
         with open(RECENT_VIEWS_FILE, 'w', encoding='utf-8') as f:
-            json.dump({}, f, ensure_ascii=False, indent=2)
-
-    if not os.path.exists(SEARCH_HISTORY_FILE):
-        with open(SEARCH_HISTORY_FILE, 'w', encoding='utf-8') as f:
             json.dump({}, f, ensure_ascii=False, indent=2)
 
 
@@ -271,12 +365,71 @@ def login_required(f):
     return decorated_function
 
 
+# Helper function for recommendations
+def get_recommendations(user_id):
+    """Gợi ý sản phẩm dựa trên lịch sử xem"""
+    recent_views = read_json(RECENT_VIEWS_FILE)
+    products = read_json(PRODUCTS_FILE)
+
+    user_id_str = str(user_id)
+    if user_id_str not in recent_views or not recent_views[user_id_str]:
+        # Nếu chưa xem gì, đề xuất sản phẩm phổ biến (giá trung bình)
+        sorted_products = sorted(products, key=lambda x: abs(x['price'] - 20000000))
+        return sorted_products[:6]
+
+    # Lấy sản phẩm đã xem gần nhất
+    last_viewed_id = recent_views[user_id_str][0]['product_id']
+    last_viewed = next((p for p in products if p['id'] == last_viewed_id), None)
+
+    if not last_viewed:
+        return products[:6]
+
+    # Tính điểm tương đồng cho mỗi sản phẩm
+    recommendations = []
+    for product in products:
+        if product['id'] == last_viewed_id:
+            continue
+
+        score = 0
+
+        # Cùng hãng: +3 điểm
+        if product['brand'] == last_viewed['brand']:
+            score += 3
+
+        # Cùng loại: +3 điểm
+        if product['category'] == last_viewed['category']:
+            score += 3
+
+        # Giá tương đương (trong khoảng ±30%): +2 điểm
+        price_diff = abs(product['price'] - last_viewed['price']) / last_viewed['price']
+        if price_diff <= 0.3:
+            score += 2
+        elif price_diff <= 0.5:
+            score += 1
+
+        recommendations.append({
+            'product': product,
+            'score': score
+        })
+
+    # Sắp xếp theo điểm và lấy top 6
+    recommendations.sort(key=lambda x: x['score'], reverse=True)
+    return [r['product'] for r in recommendations[:6]]
+
+
 # Routes
 @app.route('/')
 def index():
-    products = read_json(PRODUCTS_FILE)
+    all_products = read_json(PRODUCTS_FILE)
     search_query = request.args.get('search', '')
+    brand_filter = request.args.get('brand', '')
+    category_filter = request.args.get('category', '')
+    sort_by = request.args.get('sort', '')
 
+    # Start with all products
+    products = all_products.copy()
+
+    # Apply filters
     if search_query:
         # Lưu lịch sử tìm kiếm nếu user đã đăng nhập
         if 'user_id' in session:
@@ -284,6 +437,22 @@ def index():
 
         products = [p for p in products if search_query.lower() in p['name'].lower()
                     or search_query.lower() in p['description'].lower()]
+
+    # Lọc theo hãng
+    if brand_filter:
+        products = [p for p in products if p['brand'] == brand_filter]
+
+    # Lọc theo loại
+    if category_filter:
+        products = [p for p in products if p['category'] == category_filter]
+
+    # Sắp xếp
+    if sort_by == 'price_asc':
+        products.sort(key=lambda x: x['price'])
+    elif sort_by == 'price_desc':
+        products.sort(key=lambda x: x['price'], reverse=True)
+    elif sort_by == 'name':
+        products.sort(key=lambda x: x['name'])
 
     # Lấy sản phẩm đề xuất sử dụng ML nếu user đã đăng nhập
     recommended_products = []
@@ -294,9 +463,29 @@ def index():
             print(f"Error getting recommendations: {e}")
             recommended_products = []
 
-    return render_template('index.html', products=products, search_query=search_query,
-                           recommended_products=recommended_products)
+    # Lấy tất cả hãng và loại để hiển thị trong filter
+    all_brands = sorted(set(p['brand'] for p in all_products))
+    all_categories = sorted(set(p['category'] for p in all_products))
 
+    # Nhóm sản phẩm theo hãng (chỉ khi KHÔNG có filter nào)
+    products_by_brand = {}
+    if not search_query and not brand_filter and not category_filter and not sort_by:
+        for product in products:
+            brand = product['brand']
+            if brand not in products_by_brand:
+                products_by_brand[brand] = []
+            products_by_brand[brand].append(product)
+
+    return render_template('index.html',
+                           products=products,
+                           products_by_brand=products_by_brand,
+                           search_query=search_query,
+                           brand_filter=brand_filter,
+                           category_filter=category_filter,
+                           sort_by=sort_by,
+                           all_brands=all_brands,
+                           all_categories=all_categories,
+                           recommended_products=recommended_products)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -386,23 +575,7 @@ def product_detail(product_id):
 
         write_json(RECENT_VIEWS_FILE, recent_views)
 
-    # Lấy sản phẩm tương tự
-    similar_products = []
-    if 'user_id' in session:
-        try:
-            recommender = ProductRecommendationML()
-            if recommender.load_model():
-                recommender.load_data()
-                # Lấy sản phẩm tương tự dựa trên content-based
-                similar_products = recommender.get_recommendations(
-                    session['user_id'],
-                    n=4,
-                    exclude_ids=[product_id]
-                )
-        except Exception as e:
-            print(f"Error getting similar products: {e}")
-
-    return render_template('product_detail.html', product=product, similar_products=similar_products)
+    return render_template('product_detail.html', product=product)
 
 
 @app.route('/order/<int:product_id>', methods=['POST'])
@@ -480,65 +653,6 @@ def recent_views():
     return render_template('recent_views.html', products=viewed_products)
 
 
-@app.route('/retrain-model')
-@login_required
-def retrain_model():
-    try:
-        recommender = ProductRecommendationML()
-        recommender.train_and_save()
-        flash('Model đã được retrain thành công!', 'success')
-    except Exception as e:
-        flash(f'Lỗi khi retrain model: {str(e)}', 'danger')
-
-    return redirect(url_for('index'))
-
-
-@app.route('/api/recommendations/<int:user_id>')
-def api_recommendations(user_id):
-    """API endpoint để lấy recommendations"""
-    try:
-        n = request.args.get('n', 6, type=int)
-        recommendations = get_ml_recommendations(user_id, n=n)
-        return jsonify({
-            'success': True,
-            'recommendations': recommendations
-        })
-    except Exception as e:
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
-
-
-@app.route('/trending')
-def trending():
-    try:
-        recommender = ProductRecommendationML()
-        recommender.load_data()
-        trending_products = recommender.get_trending_products(days=7, n=10)
-        return render_template('trending.html', products=trending_products)
-    except Exception as e:
-        flash(f'Lỗi khi lấy sản phẩm trending: {str(e)}', 'danger')
-        return redirect(url_for('index'))
-
-
-@app.route('/search-history')
-@login_required
-def search_history():
-    search_history = read_json(SEARCH_HISTORY_FILE)
-    user_id = str(session['user_id'])
-
-    user_searches = search_history.get(user_id, [])
-
-    return render_template('search_history.html', searches=user_searches)
-
-
 if __name__ == '__main__':
     init_files()
-
-    # Train model lần đầu nếu chưa có
-    recommender = ProductRecommendationML()
-    if not recommender.load_model():
-        recommender.train_and_save()
-
     app.run(debug=True)

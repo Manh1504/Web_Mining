@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}{% if product %}Sửa sản phẩm{% else %}Thêm sản phẩm{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-header {
+        background: #2c3e50;
+        color: white;
+        padding: 1.5rem;
+        margin: -2rem -1rem 2rem;
+        border-radius: 4px;
+    }
+    
+    .admin-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .form-container {
+        background: white;
+        padding: 2rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        max-width: 800px;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #3498db;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>{% if product %}Sửa sản phẩm{% else %}Thêm sản phẩm mới{% endif %}</h1>
+</div>
+
+<div class="form-container">
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Tên sản phẩm</label>
+            <input type="text" id="name" name="name" value="{{ product.name if product else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="brand">Hãng</label>
+            <select id="brand" name="brand" required>
+                <option value="">-- Chọn hãng --</option>
+                <option value="Dell" {% if product and product.brand == 'Dell' %}selected{% endif %}>Dell</option>
+                <option value="Apple" {% if product and product.brand == 'Apple' %}selected{% endif %}>Apple</option>
+                <option value="Asus" {% if product and product.brand == 'Asus' %}selected{% endif %}>Asus</option>
+                <option value="HP" {% if product and product.brand == 'HP' %}selected{% endif %}>HP</option>
+                <option value="Lenovo" {% if product and product.brand == 'Lenovo' %}selected{% endif %}>Lenovo</option>
+                <option value="MSI" {% if product and product.brand == 'MSI' %}selected{% endif %}>MSI</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="category">Loại</label>
+            <select id="category" name="category" required>
+                <option value="">-- Chọn loại --</option>
+                <option value="Gaming" {% if product and product.category == 'Gaming' %}selected{% endif %}>Gaming</option>
+                <option value="Cao cấp" {% if product and product.category == 'Cao cấp' %}selected{% endif %}>Cao cấp</option>
+                <option value="Văn phòng" {% if product and product.category == 'Văn phòng' %}selected{% endif %}>Văn phòng</option>
+                <option value="Doanh nhân" {% if product and product.category == 'Doanh nhân' %}selected{% endif %}>Doanh nhân</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="price">Giá (VNĐ)</label>
+            <input type="number" id="price" name="price" value="{{ product.price if product else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="stock">Tồn kho</label>
+            <input type="number" id="stock" name="stock" value="{{ product.stock if product else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="image">URL hình ảnh</label>
+            <input type="text" id="image" name="image" value="{{ product.image if product else 'https://via.placeholder.com/300x200?text=Product' }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea id="description" name="description" required>{{ product.description if product else '' }}</textarea>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{% if product %}Cập nhật{% else %}Thêm mới{% endif %}</button>
+            <a href="{{ url_for('admin_products') }}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

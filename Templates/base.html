@@ -262,13 +262,13 @@
     <header class="header">
         <div class="header-top">
             <div class="header-top-content">
-                <div>Hotline: 1900-xxxx | support@laptopstore.vn</div>
+                <div>Hotline: 1900-xxxx | Email: support@laptopstore.vn</div>
                 <div>Miễn phí vận chuyển toàn quốc</div>
             </div>
         </div>
 
         <div class="header-main">
-            <a href="{{ url_for('index') }}" class="logo">LAPTOP STORE</a>
+            <a href="{{ url_for('index') }}" class="logo"> LAPTOP STORE</a>
 
             <form class="search-header" method="GET" action="{{ url_for('index') }}">
                 <input
@@ -282,7 +282,7 @@
 
             <div class="header-actions">
                 {% if session.user_id %}
-                    <span class="user-info">{{ session.username }}</span>
+                    <span class="user-info"> {{ session.username }}</span>
                     <a href="{{ url_for('logout') }}">Đăng xuất</a>
                 {% else %}
                     <a href="{{ url_for('login') }}">Đăng nhập</a>
@@ -296,7 +296,6 @@
         <div class="nav-content">
             <a href="{{ url_for('index') }}">Trang chủ</a>
             {% if session.user_id %}
-                <a href="{{ url_for('trending') }}">Sản phẩm hot</a>
                 <a href="{{ url_for('my_orders') }}">Đơn hàng</a>
                 <a href="{{ url_for('recent_views') }}">Đã xem</a>
             {% endif %}
@@ -322,7 +321,7 @@
             <p><strong>CÔNG TY TNHH LAPTOP STORE</strong></p>
             <p>Địa chỉ: 123 Đường ABC, Quận XYZ, TP. Hà Nội</p>
             <p>Hotline: 1900-xxxx | Email: support@laptopstore.vn</p>
-            <p style="margin-top: 1rem; opacity: 0.8;">Laptop Store - Nơi có mọi thứ bạn cần</p>
+            <p style="margin-top: 1rem; opacity: 0.8;">2025 Laptop Store</p>
         </div>
     </footer>
 </body>

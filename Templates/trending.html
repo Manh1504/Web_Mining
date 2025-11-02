@@ -209,20 +209,20 @@
                     <div class="product-name">{{ product.name }}</div>
                     <div class="product-description">{{ product.description }}</div>
                     <div class="product-meta">
-                        <span class="meta-item">🏷{{ product.brand }}</span>
-                        <span style="color: #cbd5e0;">•</span>
+                        <span class="meta-item">{{ product.brand }}</span>
+                        <span style="color: #cbd5e0;"></span>
                         <span class="meta-item">{{ product.category }}</span>
                     </div>
                     <div class="product-price">{{ "{:,.0f}".format(product.price) }} đ</div>
                     <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
                         {% if product.stock > 0 %}
-                            ✓ Còn {{ product.stock }} sản phẩm
+                            Còn {{ product.stock }} sản phẩm
                         {% else %}
-                            ✗ Hết hàng
+                            Hết hàng
                         {% endif %}
                     </div>
                     <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: auto;">
-                        Xem chi tiết →
+                        Xem chi tiết
                     </a>
                 </div>
             </div>
@@ -233,7 +233,7 @@
         <h2>Chưa có dữ liệu trending</h2>
         <p>Hãy quay lại sau khi có nhiều người xem sản phẩm hơn!</p>
         <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1.5rem;">
-            ← Về trang chủ
+            Về trang chủ
         </a>
     </div>
 {% endif %}

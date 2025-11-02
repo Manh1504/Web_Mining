@@ -4,7 +4,99 @@
 
 {% block extra_css %}
 <style>
-    /* Section Header */
+    .page-layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 968px) {
+        .page-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+            display: none;
+        }
+    }
+
+    /* Sidebar */
+    .sidebar {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        height: fit-content;
+        position: sticky;
+        top: 80px;
+    }
+
+    .sidebar-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 0.5rem;
+    }
+
+    .filter-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-size: 0.95rem;
+    }
+
+    .filter-group select {
+        width: 100%;
+        padding: 0.6rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+
+    .filter-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .filter-link {
+        padding: 0.6rem 0.8rem;
+        color: #555;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+
+    .filter-link:hover {
+        background: #f8f9fa;
+        color: #e74c3c;
+        padding-left: 1.2rem;
+    }
+
+    .filter-link.active {
+        background: #e74c3c;
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn-filter {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    /* Main Content */
+    .main-content {
+        min-height: 400px;
+    }
+    /* Section */
     .section {
         margin-bottom: 3rem;
     }
@@ -15,22 +107,23 @@
         margin-bottom: 1.5rem;
         border-left: 4px solid #e74c3c;
         box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .section-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
         color: #2c3e50;
         text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
     }
 
-    .section-subtitle {
-        font-size: 0.9rem;
+    .product-count {
         color: #7f8c8d;
-        margin-top: 0.25rem;
+        font-size: 0.9rem;
     }
 
     .recommend-badge {
@@ -40,7 +133,6 @@
         border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 600;
-        margin-left: auto;
     }
 
     /* Products Grid */
@@ -144,13 +236,6 @@
         margin-bottom: 0.5rem;
     }
 
-    .product-old-price {
-        font-size: 0.9rem;
-        color: #95a5a6;
-        text-decoration: line-through;
-        margin-bottom: 0.5rem;
-    }
-
     .product-stock {
         font-size: 0.85rem;
         color: #27ae60;
@@ -160,13 +245,6 @@
 
     .product-stock.out-of-stock {
         color: #e74c3c;
-    }
-
-    .product-actions {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-        margin-top: auto;
     }
 
     .btn-view {
@@ -180,10 +258,51 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: background 0.3s;
+        margin-top: auto;
     }
 
     .btn-view:hover {
         background: #2980b9;
+    }
+
+    /* Brand Section */
+    .brand-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .brand-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+    .brand-logo {
+        width: 50px;
+        height: 50px;
+        background: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #e74c3c;
+    }
+
+    .brand-info h2 {
+        font-size: 1.4rem;
+        color: #2c3e50;
+        font-weight: 700;
+    }
+
+    .brand-info p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
     }
 
     .no-results {
@@ -193,139 +312,221 @@
         border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
-    .no-results h2 {
-        color: #7f8c8d;
-        margin-bottom: 1rem;
-    }
-
-    /* Promo Banner */
-    .promo-banner {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 4px;
-        color: white;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-
-    .promo-banner h2 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .promo-banner p {
-        font-size: 1.1rem;
-        opacity: 0.95;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="page-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">Bộ lọc sản phẩm</h3>
 
-{% if session.user_id and recommended_products and not search_query %}
+        <form method="GET" action="{{ url_for('index') }}" id="filterForm">
+            <input type="hidden" name="search" value="{{ search_query }}">
 
-<section class="section">
-    <div class="section-header">
-        <div style="display: flex; align-items: center;">
-            <div>
-                <h2 class="section-title">
-                    DÀNH RIÊNG CHO BẠN
-                </h2>
-                <p class="section-subtitle">Sản phẩm được đề xuất phù hợp với bạn</p>
+            <div class="filter-group">
+                <label>Hãng</label>
+                <select name="brand" onchange="this.form.submit()">
+                    <option value="">Tất cả hãng</option>
+                    {% for brand in all_brands %}
+                        <option value="{{ brand }}" {% if brand_filter == brand %}selected{% endif %}>
+                            {{ brand }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Loại laptop</label>
+                <select name="category" onchange="this.form.submit()">
+                    <option value="">Tất cả loại</option>
+                    {% for category in all_categories %}
+                        <option value="{{ category }}" {% if category_filter == category %}selected{% endif %}>
+                            {{ category }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Sắp xếp</label>
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="">Mặc định</option>
+                    <option value="price_asc" {% if sort_by =='price_asc' %}selected{% endif %}>Giá thấp đến cao</option>
+                    <option value="price_desc" {% if sort_by =='price_desc' %}selected{% endif %}>Giá cao đến thấp</option>
+                    <option value="name" {% if sort_by =='name' %}selected{% endif %}>Tên A-Z</option>
+                </select>
+            </div>
+
+            {% if brand_filter or category_filter or sort_by %}
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-filter">Xóa bộ lọc</a>
+            {% endif %}
+        </form>
+
+        <div style="margin-top: 2rem;">
+            <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem;">Hãng phổ biến</h4>
+            <div class="filter-links">
+                {% for brand in all_brands %}
+                    <a href="{{ url_for('index', brand=brand) }}" class="filter-link {% if brand_filter == brand %}active{% endif %}">
+                        {{ brand }}
+                    </a>
+                {% endfor %}
             </div>
         </div>
-    </div>
+    </aside>
 
-    <div class="products-grid">
-        {% for product in recommended_products %}
-            <div class="product-card">
-                <span class="product-badge">Đề xuất</span>
-                <div class="product-image-wrapper">
-                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">{{ product.name }}</h3>
-                    <div class="product-meta">
-                        <span class="meta-tag">{{ product.brand }}</span>
-                        <span class="meta-tag">{{ product.category }}</span>
-                    </div>
-                    <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
-                    <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
-                        {% if product.stock > 0 %}
-                            ✓ Còn hàng: {{ product.stock }}
-                        {% else %}
-                            ✗ Hết hàng
-                        {% endif %}
-                    </div>
-                    <div class="product-actions">
-                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
-                            XEM CHI TIẾT
-                        </a>
-                    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        {% if session.user_id and recommended_products and not search_query and not brand_filter and not category_filter %}
+        <section class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">DÀNH RIÊNG CHO BẠN</h2>
+                    <p class="product-count">{{ recommended_products|length }} sản phẩm được đề xuất</p>
                 </div>
             </div>
-        {% endfor %}
-    </div>
-</section>
-{% endif %}
 
-<section class="section">
-    <div class="section-header">
-        <h2 class="section-title">
-            {% if search_query %}
-                KẾT QUẢ TÌM KIẾM: "{{ search_query }}"
-            {% else %}
-                TẤT CẢ SẢN PHẨM
-            {% endif %}
-        </h2>
-        {% if not search_query %}
-            <p class="section-subtitle">Khám phá bộ sưu tập laptop đa dạng với giá tốt nhất</p>
-        {% endif %}
-    </div>
-
-    {% if products %}
-        <div class="products-grid">
-            {% for product in products %}
-                <div class="product-card">
-                    {% if product.stock > 0 and product.stock < 5 %}
-                        <span class="product-badge" style="background: #f39c12;">Sắp hết</span>
-                    {% endif %}
-                    <div class="product-image-wrapper">
-                        <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">{{ product.name }}</h3>
-                        <div class="product-meta">
-                            <span class="meta-tag">{{ product.brand }}</span>
-                            <span class="meta-tag">{{ product.category }}</span>
+            <div class="products-grid">
+                {% for product in recommended_products %}
+                    <div class="product-card">
+                        <span class="product-badge">Đề xuất</span>
+                        <div class="product-image-wrapper">
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
                         </div>
-                        <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
-                        <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
-                            {% if product.stock > 0 %}
-                                ✓ Còn hàng: {{ product.stock }}
-                            {% else %}
-                                ✗ Hết hàng
-                            {% endif %}
-                        </div>
-                        <div class="product-actions">
+                        <div class="product-info">
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <div class="product-meta">
+                                <span class="meta-tag">{{ product.brand }}</span>
+                                <span class="meta-tag">{{ product.category }}</span>
+                            </div>
+                            <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
+                            <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                                {% if product.stock > 0 %}
+                                    Còn hàng: {{ product.stock }}
+                                {% else %}
+                                    Hết hàng
+                                {% endif %}
+                            </div>
                             <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
                                 XEM CHI TIẾT
                             </a>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="no-results">
-            <h2>Không tìm thấy sản phẩm nào</h2>
-            <p>Vui lòng thử lại với từ khóa khác hoặc xem tất cả sản phẩm</p>
-            <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
-                XEM TẤT CẢ SẢN PHẨM
-            </a>
-        </div>
-    {% endif %}
-</section>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
 
+        {% if search_query or brand_filter or category_filter %}
+            <section class="section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">
+                            {% if search_query %}
+                                KẾT QUẢ TÌM KIẾM: "{{ search_query }}"
+                            {% elif brand_filter %}
+                                {{ brand_filter }}
+                            {% elif category_filter %}
+                                {{ category_filter }}
+                            {% endif %}
+                        </h2>
+                        <p class="product-count">{{ products|length }} sản phẩm</p>
+                    </div>
+                </div>
+
+                {% if products %}
+                    <div class="products-grid">
+                        {% for product in products %}
+                            <div class="product-card">
+                                {% if product.stock > 0 and product.stock < 5 %}
+                                    <span class="product-badge" style="background: #f39c12;">Sắp hết</span>
+                                {% endif %}
+                                <div class="product-image-wrapper">
+                                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">{{ product.name }}</h3>
+                                    <div class="product-meta">
+                                        <span class="meta-tag">{{ product.brand }}</span>
+                                        <span class="meta-tag">{{ product.category }}</span>
+                                    </div>
+                                    <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
+                                    <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                                        {% if product.stock > 0 %}
+                                            Còn hàng: {{ product.stock }}
+                                        {% else %}
+                                            Hết hàng
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
+                                        XEM CHI TIẾT
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-results">
+                        <h2>Không tìm thấy sản phẩm nào</h2>
+                        <p>Vui lòng thử lại với bộ lọc khác</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                            XEM TẤT CẢ SẢN PHẨM
+                        </a>
+                    </div>
+                {% endif %}
+            </section>
+        {% else %}
+            {% for brand, brand_products in products_by_brand.items() %}
+                <section class="brand-section">
+                    <div class="brand-header">
+                        <div class="brand-logo">{{ brand[0] }}</div>
+                        <div class="brand-info">
+                            <h2>{{ brand }}</h2>
+                            <p>{{ brand_products|length }} sản phẩm</p>
+                        </div>
+                    </div>
+
+                    <div class="products-grid">
+                        {% for product in brand_products[:3] %}
+                            <div class="product-card">
+                                {% if product.stock > 0 and product.stock < 5 %}
+                                    <span class="product-badge" style="background: #f39c12;">Sắp hết</span>
+                                {% endif %}
+                                <div class="product-image-wrapper">
+                                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">{{ product.name }}</h3>
+                                    <div class="product-meta">
+                                        <span class="meta-tag">{{ product.brand }}</span>
+                                        <span class="meta-tag">{{ product.category }}</span>
+                                    </div>
+                                    <div class="product-price">{{ "{:,.0f}".format(product.price) }}₫</div>
+                                    <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
+                                        {% if product.stock > 0 %}
+                                            Còn hàng: {{ product.stock }}
+                                        {% else %}
+                                            Hết hàng
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn-view">
+                                        XEM CHI TIẾT
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if brand_products|length > 3 %}
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <a href="{{ url_for('index', brand=brand) }}" class="btn btn-secondary">
+                                Xem tất cả {{ brand }} ({{ brand_products|length }})
+                            </a>
+                        </div>
+                    {% endif %}
+                </section>
+            {% endfor %}
+        {% endif %}
+    </main>
+</div>
 {% endblock %}

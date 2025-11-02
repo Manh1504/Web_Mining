@@ -100,7 +100,7 @@
 
 {% block content %}
 <div class="recent-views-container">
-    <h1>👁️ Sản phẩm đã xem gần đây</h1>
+    <h1>Sản phẩm đã xem gần đây</h1>
     
     {% if products %}
         <div class="products-grid">
@@ -112,7 +112,7 @@
                         <div class="product-description">{{ product.description }}</div>
                         <div class="product-price">{{ "{:,.0f}".format(product.price) }} đ</div>
                         <div class="viewed-time">
-                            🕐 Xem lúc: {{ product.viewed_at[11:16] }} - {{ product.viewed_at[8:10] }}/{{ product.viewed_at[5:7] }}
+                            Xem lúc: {{ product.viewed_at[11:16] }} - {{ product.viewed_at[8:10] }}/{{ product.viewed_at[5:7] }}
                         </div>
                         <div class="product-stock {% if product.stock == 0 %}out-of-stock{% endif %}">
                             {% if product.stock > 0 %}
@@ -130,7 +130,7 @@
         </div>
     {% else %}
         <div class="no-views">
-            <h2>😔 Bạn chưa xem sản phẩm nào</h2>
+            <h2>Bạn chưa xem sản phẩm nào</h2>
             <p>Hãy khám phá các sản phẩm laptop tuyệt vời của chúng tôi!</p>
             <a href="{{ url_for('index') }}" class="btn btn-primary" style="margin-top: 1rem;">
                 Khám phá ngay
